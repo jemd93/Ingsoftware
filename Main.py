@@ -6,20 +6,80 @@ Created on Jan 13, 2015
 
 from datetime import datetime
 from decimal import *
+from math import *
 
-def Funcion(FechaIni, FechaFin, Tarifa):
-    delta = FechaFin - FechaIni
-    if delta.days > 3 :
-        print("Error : La reservacion no puede ser mayor a 72 horas.")
-    elif (delta.seconds/60) < 15 :
-        print("Error : La reservacion no puede ser menor a 15 minutos.")
+class Tarifa() :
+    tDiurna = 0
+    tNocturna = 0
+    
+    def __init__(self,d,n) :
+        tDiurna = d
+        tNocturna = n
+    
+def CalcularTotal(FechaIni, FechaSal, tarif):
+    
+    delta = FechaSal - FechaIni
+    tarMax = max(tarif.tDiurna,tarif.tNocturna)
+    
+    
+    if (delta.seconds/60 < 0) or (delta.days < 0) :
+        print("Error : Fecha de salida menor que Fecha de entrada ")
+         
+    #if delta.days > 3 :
+       # print("Error : La reservacion no puede ser mayor a 72 horas.")
+    #elif (delta.seconds/60) < 15 :
+     #   print("Error : La reservacion no puede ser menor a 15 minutos.")
+        
+    total = Decimal(0)
+    totalHoras = delta.days*24 + ceil(delta.seconds/3600)
+    horaActual = FechaIni.hour
+    
+    if (FechaIni.hour > 6) and (FechaIni.hour < 18) :
+        tarActual = tarif.tDiurna
+    else : 
+        tarActual = tarif.tNocturna
+    
+    while (totalHoras > 0) :
+        horaActual = horaActual + 1
+        
+        if (horaActual == 24) :
+            total = total+tarif.tNocturna
+            horaActual = 0    
+        elif (horaActual == 6) or (horaActual == 18) :
+            total = total+tarMax
+        elif (horaActual > 6) or (horaActual <= 18) :
+            total = total+tarif.tDiurna
+        else :
+            total = total+tarif.tNocturna
+            
+        totalHoras = totalHoras-1
+        
+    return total
         
         
+        
+        
+        
+    
 
-x = datetime(2015,1,10,13,0)
-y = datetime(2015,1,15,10,0) # Creando fechas
-z = datetime(2015,1,15,17,10)
-p = datetime(2015,1,15,17,15)
+anioI = int(input("Introduzca el anio de ingreso : "))
+mesI = int(input("Introduzca el mes de ingreso : "))
+diaI = int(input("Introduzca el dia de ingreso : "))
+horaI = int(input("Introduzca la hora de ingreso : "))
+minutosI = int(input("Introduzca el minuto de ingreso : "))
 
-Funcion(x,y,100)
-Funcion(z,p,100)
+anioS = int(input("Introduzca el anio de salida : "))
+mesS = int(input("Introduzca el mes de salida : "))
+diaS = int(input("Introduzca el dia de salida : "))
+horaS = int(input("Introduzca la hora de salida : "))
+minutosS = int(input("Introduzca el minuto de salida : "))
+
+tarD = Decimal(input("Introduzca la tarifa diurna : "))
+tarN = Decimal(input("Introduzca la tarifa nocturna : "))
+tar = Tarifa(tarD,tarN)
+
+
+fechaIng = datetime(anioI,mesI,diaI,horaI,minutosI)
+fechaSal = datetime(anioS,mesS,diaS,horaS,minutosS)
+
+print(CalcularTotal(fechaIng,fechaSal,tar))
