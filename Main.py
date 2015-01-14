@@ -9,15 +9,12 @@ from decimal import *
 from math import *
 
 class Tarifa() :
-    tDiurna = 0
-    tNocturna = 0
     
     def __init__(self,d,n) :
-        tDiurna = d
-        tNocturna = n
+        self.tDiurna = d
+        self.tNocturna = n
     
 def CalcularTotal(FechaIni, FechaSal, tarif):
-    
     delta = FechaSal - FechaIni
     tarMax = max(tarif.tDiurna,tarif.tNocturna)
     
@@ -62,13 +59,13 @@ def CalcularTotal(FechaIni, FechaSal, tarif):
         
     
 
-anioI = int(input("Introduzca el anio de ingreso : "))
+anioI = int(input("Introduzca el año de ingreso : "))
 mesI = int(input("Introduzca el mes de ingreso : "))
 diaI = int(input("Introduzca el dia de ingreso : "))
 horaI = int(input("Introduzca la hora de ingreso : "))
 minutosI = int(input("Introduzca el minuto de ingreso : "))
 
-anioS = int(input("Introduzca el anio de salida : "))
+anioS = int(input("Introduzca el año de salida : "))
 mesS = int(input("Introduzca el mes de salida : "))
 diaS = int(input("Introduzca el dia de salida : "))
 horaS = int(input("Introduzca la hora de salida : "))
