@@ -86,6 +86,5 @@ def main():
     #except:   
         #print("Error con los argumentos de entrada")
         
-        
 if __name__ == "__main__":
     main()

@@ -10,7 +10,6 @@ from Main import *
 
 class TestCalcularTotal(unittest.TestCase):
     
-    # Casos Invalidos
     def testFinalMenorQueInicial(self):
         fechaIng = datetime(2015,1,18,17,0)
         fechaSal = datetime(2015,1,17,17,0)
