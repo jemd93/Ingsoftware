@@ -18,26 +18,26 @@ class Tarifa() :
 def CalcularTotal(FechaIni, FechaSal, tarif):
     delta = FechaSal - FechaIni
     tarMax = max(tarif.tDiurna,tarif.tNocturna)
+    totalHoras = delta.days*24 + ceil(delta.seconds/3600)
+    totalMin = (delta.days*24 + delta.seconds/3600) * 60
     
     if (delta.seconds/60 < 0) or (delta.days < 0) :
         print("Error : Fecha de salida menor que Fecha de entrada ")
         return -1
-    if delta.days > 3 :
+    if (delta.days == 3 and delta.seconds > 0) or (delta.days > 3) :
         print("Error : La reservacion no puede ser mayor a 72 horas.")
         return -1
-    elif (delta.seconds/60) < 15 :
+    elif (totalMin < 15) :
         print("Error : La reservacion no puede ser menor a 15 minutos.")
         return -1
-    if (tarif<0.01):
-        print("Error: La tarifa no puede ser menor a 0.01")
+    if (tarif.tDiurna < 0) or (tarif.tNocturna < 0):
+        print("Error: La tarifa no puede ser menor a 0")
         return -1
-    elif (tarif>(2**32)-1):
+    elif (tarif.tDiurna>(2**32)-1) or (tarif.tNocturna>(2**32)-1):
         print("Error: El valor de la tarifa no es representable")
         return -1
         
     total = Decimal(0)
-    totalHoras = delta.days*24 + ceil(delta.seconds/3600)
-    print("Total horas : ",totalHoras)
     horaActual = FechaIni.hour
     
     while (totalHoras > 0) :
