@@ -1,8 +1,8 @@
 '''
-Created on Jan 13, 2015
 
 @author: Jorge Marcano 11-10566
 @author: Maria Victoria Jorge 11-10495
+
 '''
 
 from datetime import datetime
