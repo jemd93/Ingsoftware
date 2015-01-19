@@ -40,16 +40,32 @@ def CalcularTotal(FechaIni, FechaSal, tarif):
     total = Decimal(0)
     horaActual = FechaIni.hour
     
+    if (6 <= horaActual < 18): # La hora inicial esta en el turno diurno
+        esDiurno = True         # Booleano para saber el turno actual
+    else:                       # La hora inicial esta en el turno nocturno
+        esDiurno = False 
+    
+    if (totalHoras == 1):
+        if ((FechaSal.hour == 6) or (FechaSal.hour == 18)) and (FechaSal.minute!=0): # Menos de una hora y mixta
+            return tarMax
+    
     while (totalHoras > 0) :
         horaActual = horaActual + 1
         
         if (horaActual == 24) :
-            total = total+tarif.tNocturna
+            total = total + tarif.tNocturna
             horaActual = 0    
         elif (horaActual == 6) or (horaActual == 18) :
-            total = total+tarMax
-        elif (horaActual > 6) and (horaActual <= 18) :
-            total = total+tarif.tDiurna
+            if (totalHoras == 1): # Es la ultima hora que se cobrara
+                if (esDiurno):
+                    total = total + tarif.tDiurna
+                else:
+                    total = total + tarif.tNocturna
+            else: # Queda mas tiempo en la reservacion, pero cambio de turno
+                esDiurno = not(esDiurno)               
+                total = total + tarMax
+        elif (horaActual > 6) and (horaActual < 18) :
+            total = total + tarif.tDiurna
         else :
             total = total+tarif.tNocturna
             
