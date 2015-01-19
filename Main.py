@@ -38,7 +38,6 @@ def CalcularTotal(FechaIni, FechaSal, tarif):
         
     totalHoras = delta.days*24 + ceil(delta.seconds/3600)
     total = Decimal(0)
-    print("Total horas : ",totalHoras)
     horaActual = FechaIni.hour
     
     if ( 6 <= horaActual < 18):
@@ -68,8 +67,12 @@ def CalcularTotal(FechaIni, FechaSal, tarif):
                 
         elif (horaActual > 6) and (horaActual < 18) :
             total = total+tarif.tDiurna
-        elif (horaActual < 6) or (horaActual > 18) :
+        else : 
             total = total+tarif.tNocturna
+            
+        if (total > ((2**32)-1)) :
+            print("Error : El total es mayor al maximo numero representable.")
+            return -1
             
         totalHoras = totalHoras-1
         

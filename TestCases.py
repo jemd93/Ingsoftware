@@ -75,3 +75,21 @@ class TestCalcularTotal(unittest.TestCase):
         tar = Tarifa(Decimal(10),Decimal(20))
         
         self.assertEquals(240,CalcularTotal(fechaIng,fechaSal,tar))
+        
+    # Casos Malicia
+    
+    def testTarMaxTotal(self):
+        fechaIng = datetime(2015,1,20,14)
+        fechaSal = datetime(2015,1,20,16)
+        tar = Tarifa(Decimal((2**32)-1),Decimal((2**32)-1))
+        
+        self.assertEquals(-1,CalcularTotal(fechaIng,fechaSal,tar))
+        
+    def testCambioAnio(self):
+        fechaIng = datetime(2015,12,31,20)
+        fechaSal = datetime(2016,1,1,5)
+        tar = Tarifa(Decimal(10),Decimal(20))
+        
+        self.assertEquals(180,CalcularTotal(fechaIng,fechaSal,tar))
+        
+    
