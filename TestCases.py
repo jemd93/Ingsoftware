@@ -8,5 +8,4 @@
 import unittest
 from Main import CalcularTotal
 
-class TestCalcularTotal(unittest.TestCase):
-    # Aqui van las pruebas
+#class TestCalcularTotal(unittest.TestCase):
