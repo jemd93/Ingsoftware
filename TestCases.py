@@ -9,6 +9,8 @@ from Main import *
 
 class TestCalcularTotal(unittest.TestCase):
     
+    # Casos Frontera
+    
     def testMinDiurno(self):
         fechaIng = datetime(2015,1,17,16)
         fechaSal = datetime(2015,1,17,16,15)
@@ -58,3 +60,18 @@ class TestCalcularTotal(unittest.TestCase):
         
         self.assertEquals(60,CalcularTotal(fechaIng,fechaSal,tar)) 
         
+    # Casos Esquina
+    
+    def testMaxDiurno(self):
+        fechaIng = datetime(2015,1,17,6)
+        fechaSal = datetime(2015,1,17,18)
+        tar = Tarifa(Decimal(10),Decimal(20))
+        
+        self.assertEquals(120,CalcularTotal(fechaIng,fechaSal,tar))
+        
+    def testMaxNocturno(self):
+        fechaIng = datetime(2015,1,17,18)
+        fechaSal = datetime(2015,1,18,6)
+        tar = Tarifa(Decimal(10),Decimal(20))
+        
+        self.assertEquals(240,CalcularTotal(fechaIng,fechaSal,tar))

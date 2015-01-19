@@ -26,7 +26,7 @@ def CalcularTotal(FechaIni, FechaSal, tarif):
     if (delta.days == 3 and delta.seconds > 0) or (delta.days > 3) :
         print("Error : La reservacion no puede ser mayor a 72 horas.")
         return -1
-    elif (totalMin*60) < 15 :
+    elif (totalMin) < 15 :
         print("Error : La reservacion no puede ser menor a 15 minutos.")
         return -1
     if (tarif.tDiurna<0) or (tarif.tNocturna<0):
@@ -41,6 +41,15 @@ def CalcularTotal(FechaIni, FechaSal, tarif):
     print("Total horas : ",totalHoras)
     horaActual = FechaIni.hour
     
+    if ( 6 <= horaActual < 18):
+        esDiurno = True
+    else :
+        esDiurno = False
+        
+    if (totalHoras == 1):
+        if ((FechaSal.hour == 6) or (FechaSal.hour == 18)) and (FechaSal.minute != 0) : 
+            return tarMax
+        
     while (totalHoras > 0) :
         horaActual = horaActual + 1
         
@@ -48,10 +57,18 @@ def CalcularTotal(FechaIni, FechaSal, tarif):
             total = total+tarif.tNocturna
             horaActual = 0    
         elif (horaActual == 6) or (horaActual == 18) :
-            total = total+tarMax
-        elif (horaActual > 6) and (horaActual <= 18) :
+            if (totalHoras == 1):
+                if (esDiurno):
+                    total = total + tarif.tDiurna
+                else :
+                    total = total + tarif.tNocturna
+            else :
+                esDiurno = not(esDiurno)
+                total = total + tarMax
+                
+        elif (horaActual > 6) and (horaActual < 18) :
             total = total+tarif.tDiurna
-        else :
+        elif (horaActual < 6) or (horaActual > 18) :
             total = total+tarif.tNocturna
             
         totalHoras = totalHoras-1
