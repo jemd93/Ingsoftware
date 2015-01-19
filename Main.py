@@ -77,7 +77,6 @@ def CalcularTotal(FechaIni, FechaSal, tarif):
         
     
 def main():
-    #try:
         anioI = int(input("Introduzca el anio de ingreso : "))
         mesI = int(input("Introduzca el mes de ingreso (1-12) : "))
         diaI = int(input("Introduzca el dia de ingreso : "))
@@ -92,18 +91,25 @@ def main():
         
         tarD = Decimal(input("Introduzca la tarifa diurna : "))
         tarN = Decimal(input("Introduzca la tarifa nocturna : "))
+        
         tar = Tarifa(tarD,tarN)
         
+        try :
+            fechaIng = datetime(anioI,mesI,diaI,horaI,minutosI)
+        except ValueError :
+                print("Error : La fecha de ingreso no es valida.")
+                return -1
         
-        fechaIng = datetime(anioI,mesI,diaI,horaI,minutosI)
-        fechaSal = datetime(anioS,mesS,diaS,horaS,minutosS)
+        try :       
+            fechaSal = datetime(anioS,mesS,diaS,horaS,minutosS)
+        except ValueError : 
+                print("Error : La fecha de salida no es valida.")
+                return -1
         
         total = CalcularTotal(fechaIng,fechaSal,tar)
+        
         if (total!=-1):
             print("Debe pagar: ",total)
-    #except:   
-        #print("Error con los argumentos de entrada")
-        
         
 if __name__ == "__main__":
     main()
