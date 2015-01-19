@@ -69,6 +69,10 @@ def CalcularTotal(FechaIni, FechaSal, tarif):
         else :
             total = total+tarif.tNocturna
             
+        if (total > ((2**32)-1)):
+            print("Error : El total es mayor al maximo numero representable.")
+            return -1    
+            
         totalHoras = totalHoras-1
         
     return total
