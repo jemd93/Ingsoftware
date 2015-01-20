@@ -3,6 +3,18 @@
 @author: Jorge Marcano 11-10566
 @author: Maria Victoria Jorge 11-10495
 
+Nota 1 : Se utilizara el numero (2^32)-1) para simular el maximo numero representable
+         en Python, cumpliendo con la sugerencia del profesor Teruel. De manera que, a efectos
+         de este programa, cualquier numero mayor que ese se tomara como no representable
+         y devolvera un error en caso de ser usado.
+
+Nota 2 : Se tomo las 6:00 como horario diurno y las 18:00 como horario nocturno. Con la 
+         finalidad de crear una funcion mas apegada a la realidad, esas fronteras dependen
+         del conexto. Si se realiza una reservacion que termina justo a las 18:00 no se 
+         cobra la tarifa mas cara sino la diurna, en el caso de que la reservacion pase
+         de las 18:00 si se toma como horario de transicion. Lo mismo aplica para una 
+         reservacion que termina a las 6:00, se cobraria como la tasa nocturna.
+
 '''
 
 from datetime import datetime
