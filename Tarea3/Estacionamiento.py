@@ -13,7 +13,10 @@ class Estacionamiento :
         self.puestos = puestos
         
     def reservar(self,horaIni,horaFin) :
-        return True
+        if len(self.reservaciones)>0:
+            return False
+        else:
+            return True
         
         
     
