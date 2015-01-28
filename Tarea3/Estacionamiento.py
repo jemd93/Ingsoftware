@@ -29,9 +29,9 @@ class Estacionamiento :
                 best = cnt
                 beststart=tabla[i][0]
                 bestend = tabla[i+1][0]
-            elif (best == cnt) :
+            elif (best == cnt) and (best == self.puestos) :
                 if (listaOut.count([tabla[i][0],tabla[i+1][0]]) == 0) and (tabla[i][0] != tabla[i+1][0]) :
-                    listaOut.append([tabla[i][0],tabla[i+1][0]])
+                        listaOut.append([tabla[i][0],tabla[i+1][0]])
         
         listaOut.append([beststart,bestend])
         listaOut.append([best,0])
@@ -39,12 +39,12 @@ class Estacionamiento :
     
     def reservar(self,horaIni,horaFin) :
         
-        if ((horaIni < 6) or (horaFin > 18)) and (horaFin-horaIni < 0) :
+        if ((horaIni < 6) or (horaFin > 18)) or (horaFin-horaIni < 0) :
             return -1
         
         reservaOrdenada = self.reservaciones
         reservaOrdenada.sort()
-        reservaOrdenada.sort(key=lambda k: (k[0]))
+        reservaOrdenada.sort(key=lambda k: (k[0],-k[1]))
          
         listaIntervalo = self.marzullo(reservaOrdenada,horaIni,horaFin) # Devuelve la lista de todos los intervalos maximos
         best = listaIntervalo[len(listaIntervalo)-1][0] # Aqui esta el best 
