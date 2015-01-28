@@ -15,9 +15,11 @@ class Estacionamiento :
     def reservar(self,horaIni,horaFin) :
         if len(self.reservaciones) > 0:
             cnt = 0
-            for i in range(len(self.reservaciones)) :
-                if (self.reservaciones[i][0] == horaIni) and (self.reservaciones[i][1] == -1) :
+            i = 0
+            while i < len(self.reservaciones)-1 :
+                if (self.reservaciones[i][0] <= horaIni) and (self.reservaciones[i+1][0] >= horaFin) :
                     cnt = cnt+1
+                i = i+2
             
             if (cnt == self.puestos) :
                 return False

@@ -37,5 +37,14 @@ class TestReservar(unittest.TestCase):
         for i in range(0,e.puestos-1):
             e.reservaciones.append([10,-1])
             e.reservaciones.append([12,1])  
-        self.assertEquals(e.reservar(14,16),True)  
+        self.assertEquals(e.reservar(14,16),True)
+        
+    def testReservacionSolapada(self):
+        e = Estacionamiento(10)
+        for i in range(0,e.puestos):
+            e.reservaciones.append([10,-1])
+            e.reservaciones.append([15,1])
+            
+        self.assertEquals(e.reservar(12,14),False)
+          
         
