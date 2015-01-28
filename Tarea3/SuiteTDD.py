@@ -76,7 +76,7 @@ class TestReservar(unittest.TestCase):
             e.reservaciones.append([18,1])    
         self.assertEquals(e.reservar(6,18),True)
         
-    def testHoraInvalidaMinima(self): # TDD puro (condicion ve entrada valida)
+    def testHoraInvalidaMinima(self): # TDD puro (condicion de entrada valida) y frontera.
         e = Estacionamiento(10)
         for i in range(0,e.puestos-4) :
             e.reservaciones.append([9,-1])
@@ -85,3 +85,13 @@ class TestReservar(unittest.TestCase):
             e.reservaciones.append([7,1])
             
         self.assertEquals(e.reservar(5,13),-1)
+        
+    def testHoraInvalidaMaxima(self): # TDD puro (condicion de entrada valida) y frontera.
+        e = Estacionamiento(10)
+        for i in range(0,e.puestos-4) :
+            e.reservaciones.append([9,-1])
+            e.reservaciones.append([12,1])
+            e.reservaciones.append([6,-1])
+            e.reservaciones.append([7,1])
+            
+        self.assertEquals(e.reservar(16,19),-1)
