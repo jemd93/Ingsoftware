@@ -39,16 +39,25 @@ class TestReservar(unittest.TestCase):
             e.reservaciones.append([12,1])  
         self.assertEquals(e.reservar(14,16),True)
         
-    def testReservacionSolapadaInterna(self):
+    def testReservacionSolapadaInterna(self): # TDD puro.
         e = Estacionamiento(10)
         for i in range(0,e.puestos):
             e.reservaciones.append([10,-1])
             e.reservaciones.append([15,1])    
         self.assertEquals(e.reservar(12,14),False)
           
-    def testReservacionSolapadaExterna(self):
+    def testReservacionSolapadaExterna(self): # TDD puro.
         e = Estacionamiento(10)
         for i in range(0,e.puestos):
             e.reservaciones.append([12,-1])
             e.reservaciones.append([14,1])    
-        self.assertEquals(e.reservar(10,16),False)    
+        self.assertEquals(e.reservar(10,16),False)
+        
+    def testReservacionSolapadaMixta(self): # TDD puro.
+        e = Estacionamiento(10)
+        for i in range(0,e.puestos):
+            e.reservaciones.append([12,-1])
+            e.reservaciones.append([14,1])    
+        self.assertEquals(e.reservar(10,13),False)
+        
+    
