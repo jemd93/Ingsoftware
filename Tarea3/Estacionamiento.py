@@ -39,7 +39,7 @@ class Estacionamiento :
     
     def reservar(self,horaIni,horaFin) :
         
-        if (horaIni < 6) or (horaFin > 18) :
+        if ((horaIni < 6) or (horaFin > 18)) and (horaFin-horaIni < 0) :
             return -1
         
         reservaOrdenada = self.reservaciones

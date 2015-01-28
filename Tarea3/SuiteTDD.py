@@ -105,3 +105,13 @@ class TestReservar(unittest.TestCase):
             e.reservaciones.append([14,1])
         
         self.assertEquals(e.reservar(12,13),False)
+        
+    def testReservacionInvalida(self): # TDD puro (condicion de entrada validad)
+        e = Estacionamiento(10)
+        for i in range(0,e.puestos) :
+            e.reservaciones.append([11,-1])
+            e.reservaciones.append([13,1])
+            e.reservaciones.append([12,-1])
+            e.reservaciones.append([14,1])
+    
+        self.assertEquals(e.reservar(12,10),-1)
