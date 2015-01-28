@@ -38,6 +38,10 @@ class Estacionamiento :
         return listaOut
     
     def reservar(self,horaIni,horaFin) :
+        
+        if (horaIni < 6) :
+            return -1
+        
         reservaOrdenada = self.reservaciones
         reservaOrdenada.sort()
         reservaOrdenada.sort(key=lambda k: (k[0]))
