@@ -17,7 +17,7 @@ class Estacionamiento :
             cnt = 0
             i = 0
             while i < len(self.reservaciones)-1 :
-                if (self.reservaciones[i][0] <= horaIni) and (self.reservaciones[i+1][0] >= horaFin) :
+                if ((self.reservaciones[i][0] <= horaIni) and (self.reservaciones[i+1][0] >= horaFin)) or ((self.reservaciones[i][0] >= horaIni) and (self.reservaciones[i+1][0] <= horaFin)) :
                     cnt = cnt+1
                 i = i+2
             
