@@ -13,15 +13,17 @@ class Estacionamiento :
         self.puestos = puestos
         
     def reservar(self,horaIni,horaFin) :
-        if len(self.reservaciones) == 2*self.puestos:
-            return False
         if len(self.reservaciones) > 0:
-            i = 0
-            while i<len(self.reservaciones)-1:
-                if ((self.reservaciones[i][0]==horaIni) and (self.reservaciones[i+1][1]==horaFin)):
-                    return False
-                i = i+2
-            return True
+            cnt = 0
+            for i in range(len(self.reservaciones)) :
+                if (self.reservaciones[i][0] == horaIni) and (self.reservaciones[i][1] == -1) :
+                    cnt = cnt+1
+            
+            if (cnt == self.puestos) :
+                return False
+            else :
+                return True
+                
         else:
             return True
         
