@@ -69,4 +69,9 @@ class TestReservar(unittest.TestCase):
             e.reservaciones.append([16,1])    
         self.assertEquals(e.reservar(14,16),False)
         
-    
+    def testEstacionamientoOcupadoDiaEntero(self): # Esquina
+        e = Estacionamiento(10)
+        for i in range(0,e.puestos-1):
+            e.reservaciones.append([6,-1])
+            e.reservaciones.append([18,1])    
+        self.assertEquals(e.reservar(6,18),True)
