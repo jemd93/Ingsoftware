@@ -60,4 +60,13 @@ class TestReservar(unittest.TestCase):
             e.reservaciones.append([14,1])    
         self.assertEquals(e.reservar(10,13),False)
         
+    def testDosIntervalosMaximos(self): # TDD puro. (Malicia)
+        e = Estacionamiento(10)
+        for i in range(0,e.puestos):
+            e.reservaciones.append([9,-1])
+            e.reservaciones.append([10,1])
+            e.reservaciones.append([14,-1])
+            e.reservaciones.append([16,1])    
+        self.assertEquals(e.reservar(14,16),False)
+        
     

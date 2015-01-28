@@ -1,41 +1,57 @@
 '''
 27/01/2015
-
+ 
 Jorge Marcano : 11-10566
 Maria Victoria Jorge : 11-10566
-
+ 
 '''
-
+ 
 class Estacionamiento :
-    
+     
     def __init__(self,puestos): 
         self.reservaciones = []
         self.puestos = puestos
-        
-    def reservar(self,horaIni,horaFin) :
-        reservaOrdenada = self.reservaciones
-        reservaOrdenada.sort()
-        
+         
+    def marzullo(self,tabla,horaIni,horaFin):
         best = 0
         cnt = 0
+        listaOut = []
+        beststart = 0
+        bestend = 0
         
-        for i in range(len(reservaOrdenada)-1) :
-            if (reservaOrdenada[i][1] == -1) : 
+        for i in range(len(tabla)-1) :
+            if (tabla[i][1] == -1) : 
                 cnt = cnt+1
             else :
                 cnt = cnt-1
         
             if (cnt > best) :
                 best = cnt
-                beststart=reservaOrdenada[i][0]
-                bestend = reservaOrdenada[i+1][0]
-                
-        if (best == self.puestos) and (((beststart <= horaIni < bestend) or (beststart <  horaFin <= bestend)) or ((horaIni < beststart) and (horaFin > bestend))) :
-            return False
-        else : 
-            return True
-            
-            
+                beststart=tabla[i][0]
+                bestend = tabla[i+1][0]
+            elif (best == cnt) :
+                if (listaOut.count([tabla[i][0],tabla[i+1][0]]) == 0) and (tabla[i][0] != tabla[i+1][0]) :
+                    listaOut.append([tabla[i][0],tabla[i+1][0]])
         
+        listaOut.append([beststart,bestend])
+        listaOut.append([best,0])
+        return listaOut
     
-    
+    def reservar(self,horaIni,horaFin) :
+        reservaOrdenada = self.reservaciones
+        reservaOrdenada.sort()
+        reservaOrdenada.sort(key=lambda k: (k[0]))
+         
+        listaIntervalo = self.marzullo(reservaOrdenada,horaIni,horaFin) # Devuelve la lista de todos los intervalos maximos
+        best = listaIntervalo[len(listaIntervalo)-1][0] # Aqui esta el best 
+        
+        if (best == self.puestos):
+            i = 0
+            while (i<len(listaIntervalo)-1):
+                if (((listaIntervalo[i][0] <= horaIni < listaIntervalo[i][1]) or (listaIntervalo[i][0] <  horaFin <= listaIntervalo[i][1])) or ((horaIni < listaIntervalo[i][0]) and (horaFin > listaIntervalo[i][1]))):
+                    return False
+                i = i + 1
+        self.reservaciones.append([horaIni,-1]) # Se agregan las horas aceptadas a la lista de las reservas
+        self.reservaciones.append([horaFin,1])
+        return True
+             
