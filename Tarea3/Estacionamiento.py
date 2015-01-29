@@ -8,10 +8,14 @@ Maria Victoria Jorge : 11-10566
  
 class Estacionamiento :
      
+    # Constructor
     def __init__(self,puestos): 
         self.reservaciones = []
         self.puestos = puestos
-         
+    
+    # Algoritmo de marzullo modificado para devolver
+    # una lista con todos los horarios en donde el 
+    # estacionamiento esta lleno.     
     def marzullo(self,tabla,horaIni,horaFin):
         best = 0
         cnt = 0
@@ -37,9 +41,13 @@ class Estacionamiento :
         listaOut.append([best,0])
         return listaOut
     
+    # Funcion que buscamos probar, 
+    # devuelve True si la reservacion es valida
+    # False en caso contrario. -1 en caso de error.
     def reservar(self,horaIni,horaFin) :
         
-        if ((horaIni < 6) or (horaFin > 18)) or (horaFin-horaIni < 0) :
+        # Verificacion de entrada
+        if ((horaIni < 6) or (horaFin > 18)) or (horaFin-horaIni <= 0) :
             return -1
         
         reservaOrdenada = self.reservaciones
